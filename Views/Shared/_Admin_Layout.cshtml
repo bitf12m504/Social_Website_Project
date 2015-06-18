@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Bootstrap/css/bootstrap.min.css" />
+
+    <script type="text/javascript" src="~/Content/jQuery/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="~/Content/Bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color:lavender">
+    <!--- <nav class="navbar navbar-inverse form-inline " style="background-color:#035aa8; margin:0">
+         <div class="container-fluid">
+             <img src="~/Images/s.png" style="margin-left:65px" height="45px" width="50px" />
+             <input type="text" class="form-control row" style="margin-left:0; padding-right:250px" placeholder="Search for friends, people.." />
+             <button type="button" class="btn btn-default row">
+                 <span class="glyphicon glyphicon-search"></span>
+             </button>
+
+             <ul class="nav navbar-nav navbar-right row" style="margin-right:150px">
+                 <li><img src="~/Images/profile.jpg" width="25px" height="25px" style="margin-top: 10px; margin-left: 10px; margin-right:0px" /></li>
+                 <li><a href="#" style="color:white; margin-left:0; font-weight:600">Alishba</a></li>
+                 <li><a href="#" style="color: white; font-weight: 600">Home</a></li>
+                 <li><a href="#" style="color: white; font-weight: 600">Find Friends</a></li>
+                 <li><img src="~/Images/friend.ico" width="30px" height="30px" style="margin-top:10px;margin-left:15px;" /></li>
+                 <li><img src="~/Images/chat.ico" width="30px" height="30px" style="margin-top: 10px; margin-left: 15px;" /></li>
+                 <li><img src="~/Images/globe.ico" width="30px" height="30px" style="margin-top: 10px; margin-left: 15px;" /></li>
+             </ul>
+         </div>
+     </nav>
+     <div style="margin-top:0">
+        
+
+     </div>-->
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <div class="col-md-3" style="margin-top:10px">
+                    <!-- It can be fixed with bootstrap affix http://getbootstrap.com/javascript/#affix-->
+                    <div id="sidebar" class="well sidebar-nav">
+                        <h5>
+                            <i class="glyphicon glyphicon-home"></i>
+                            <small><b>MANAGEMENT</b></small>
+                        </h5>
+                        <ul class="nav nav-pills nav-stacked">
+                            <li><a href="/Admin/Users">View Users</a></li>
+                            </ul>
+                        
+                        <h5>
+                            <i class="glyphicon glyphicon-log-out"></i>
+                            <a href="/Admin/Logout"><b>Logout</b></a>
+                        </h5>
+                    </div>
+                    <div class=" panel well col-md-12" style="padding:0">
+                       <div class="panel panel-primary">
+                           <div class="panel-heading">
+                               Statistics
+                           </div>
+                           <div class="panel-body">
+                               @{
+                                   int userCount = (int)Session["UserCount"];
+                                   int postCount = (int)Session["PostCount"];
+                                   int photoCount = (int)Session["PhotoCount"];
+                               }
+                               <p><span style="color:black; font-weight:600">Total users: </span>@userCount</p>
+                               <p><span style="color:black; font-weight:600">Total photos: </span>@photoCount</p>
+                               <p><span style="color:black; font-weight:600">Total posts: </span>@postCount</p>
+                               
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            
+            @RenderBody()
+        </div>
+    </div>
+   
+</body>
+</html>

@@ -1,0 +1,89 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model  List<Social_Frenzy.Models.Post>
+@using Social_Frenzy.Models
+<script>
+    $(document).ready(function () {
+        $("#fancybox").fancyBox();
+    });
+</script>
+
+
+
+        <body style="background-color:lavender">
+           
+                     @Html.Partial("~/Views/Shared/Timeline.cshtml")
+                
+           
+            <div style="margin-left:20px; " class="col-md-9">
+                <div class="panel panel-default" >
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-picture" style="font-size:18px"> <span style="font-size:20px; font-family:Arial"> Photos</span></span>
+                        <div style="margin-left:20px; margin-top:10px">Photos of you</div>
+                    </div>
+                    <div class="panel-body">
+        @{
+                    int i = 0;
+                   if(Model.Count == 0)
+                   {
+                      <label>No photos yet</label> 
+                   }
+                   else
+                   { 
+                       while(i < Model.Count())
+                {
+                    <table>
+                            <tr>
+        @if(i < Model.Count())
+                        {
+
+                            Social_Frenzy.Models.Post p = Model[i];
+                            i++;
+
+                            <td><a id="fancybox" rel="group" href="/Images/@p.Photo"><img src="/Images/@p.Photo" alt="" height="235px" width="235px" style="border:2px solid white"></a></td>
+                        }
+        @if (i < Model.Count())
+                        {
+
+                            Social_Frenzy.Models.Post p = Model[i];
+                            i++;
+
+                            <td><a href="#ImageModal"><img src="/Images/@p.Photo" id="photo" height="235px" width="235px" style="border:2px solid white" /></a></td>
+                        }
+        @if (i < Model.Count())
+                        {
+
+                                Social_Frenzy.Models.Post p = Model[i];
+                                i++;
+
+                            <td><a href="#ImageModal"><img src="/Images/@p.Photo" id="photo" height="235px" width="235px" style="border:2px solid white" /></a></td>
+                       }
+        @if (i < Model.Count())
+                        {
+
+                            Social_Frenzy.Models.Post p = Model[i];
+                            i++;
+
+                        <td><a href="#ImageModal"><img src="/Images/@p.Photo" id="photo" height="235px" width="235px" style="border:2px solid white" /></a></td>
+                        }
+     </tr>
+ </table>
+                }
+                }
+                }
+
+</div>
+</div>
+</div>
+</body>
+<div id="ImageModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

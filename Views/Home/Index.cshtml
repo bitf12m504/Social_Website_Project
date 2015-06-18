@@ -1,0 +1,180 @@
+﻿@{
+    Layout = null;
+}
+
+@model Social_Frenzy.Models.User
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Bootstrap/css/bootstrap.min.css" />
+    <link href="~/Content/style.css" rel="stylesheet">
+    
+    @Scripts.Render("~/bundles/jquery")
+    
+    <script>
+        $(document).ready(function () {
+
+            $('#b1').click(function () {
+
+                var userName = $('#Email').val();
+
+                
+                $.getJSON("/Home/CheckEmail?Email=" + userName, function (data) {
+                    
+                    if (data) {
+                        $('#result').text("User already exists in database");
+
+                    }
+                    else {
+                        $('#result').text("User Name is available");
+                    }
+                });
+
+            });
+
+        });
+    </script>
+
+</head>
+<body>
+    <div class="navbar navbar-inverse form-inline " style="background-color:#035aa8">
+        <img src="~/Images/logo2.png" height="120px" width="210px" />
+        <div class="nav navbar-nav navbar-right " style=" margin-top:20px; margin-right:20px">
+            @using(Html.BeginForm("ValidateUser", "Home", FormMethod.Post))
+            {
+                <div class="form-group row" style="width:510px">
+                    <div class="col-sm-4" style="margin-left:60px">
+                        <!--<label for="email" style="font-size:18px; font-style:initial; color:#f0f0f0">Email address</label>
+                        <input type="email" class="form-control" id="email" name="Email" placeholder="Your email here" required>-->
+                        @Html.LabelFor(m=>m.Email, new { style = "font-size:18px; font-style:initial; color:#f0f0f0" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type="email",name="Email", id = "email", placeholder = "Your email here", required="required"})
+                    </div>
+                    <div class="col-sm-4" style="margin-left:50px">
+                        <!--<label for="pwd" style="font-size:18px; color:#f0f0f0">Password</label>
+                        <input type="password" class="form-control" id="pwd" name="Password" placeholder="Password" required>-->
+                        @Html.LabelFor(m => m.Password, new { style = "font-size:18px; color:#f0f0f0" })
+                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", id = "pwd", name="Password", placeholder="Password",type="password", required="required"})
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success" style="padding-left:15px; padding-right:15px;margin-top:30px;margin-left:15px">Login</button>
+            }
+                
+        </div>
+    </div>
+    <div class="col-md-7">
+        <h2  style="font-family: 'Comic Sans MS'; color: #035aa8; font-weight: 700;">Connect with <span style="font-weight: 700; font-family: 'Comic Sans MS'; color: #29c63d; font-size: 40px">friends</span> and <span style="color: #29c63d; font-size: 40px; ">people</span> around you on</h2>
+        <h2 style="margin-left: 180px; font-weight:700;font-family: 'Comic Sans MS'; color: #035aa8;font-size:45px;">Social Frenzy</h2>
+        <img src="~/Images/social.jpg" style="margin-left:100px" height="380px" width="380px"/>
+    </div>
+    <div class="col-md-5">
+        <h3 style="font-weight:700; font-size:30px">Sign Up !</h3>
+        <!--<form class="form-horizontal " role="form" id="SignUp_Form" action="/Home/AddUser" method="post">-->
+        @using (Html.BeginForm("AddUser", "Home", FormMethod.Post, new { @class = "form-horizontal", id = "SignUp_Form", role = "form" }))
+        {
+            <div class="controls controls-row form-group" style="margin:0">
+                <!--<input class="span1 well well-sm" style="padding-right:19px;" type="text" placeholder="First Name" name="FirstName" required/>
+                <input class="span1 well well-sm" style=" padding-right:19px" type="text" placeholder="Last Name" name="LastName" required/>-->
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "span1 well well-sm", style = "padding-right:19px;", type = "text", placeholder = "First Name", name = "FirstName", required = "required" })
+                @Html.TextBoxFor(m => m.LastName, new { @class = "span1 well well-sm", style = "padding-right:19px;", type = "text", placeholder = "Last Name", name = "LastName", required = "required" })
+            </div>
+            <div class="controls form-group" style="margin:0px">
+                <!--<input class="col-sm-9 well well-sm" type="email" placeholder="Email Address" id="Email" name="Email" required/>-->
+                @Html.TextBoxFor(m => m.Email, new {@class="col-sm-9 well well-sm", type="email", placeholder="Email Address", id="Email", name="Email", required = "required" })
+                <label id="result1" style="color:red"></label>
+                
+            </div>
+            <div class="controls form-group" style="margin:0px" >
+                <input style="margin-bottom:10px" type="button" class="btn btn-default" id="b1" value="Check Availibility" />
+                <label id="result" style="color:red"></label>
+            </div>
+            <div class="controls form-group" style="margin:0px">
+                <!--<input class="col-sm-9 well well-sm" type="password" placeholder="Password" name="Password" required/>-->
+                @Html.TextBoxFor(m => m.Password, new {@class="col-sm-9 well well-sm", type="password", placeholder="Password", name="Password",  required = "required" })
+            </div>
+            <div class="form-group" style="margin:0" >
+                <label style="font-size:20px; margin-right:10px; color:ButtonText">Birthday<span style="font-size:15px"> (Set your birthday, default is 1 Jan, 1995)</span>:</label>
+                <div class="controls controls-row form-group form-inline" style="margin:0">
+                    <select id="sel1" class="form-control" name="Day" >
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                        <option>25</option>
+                        <option>26</option>
+                        <option>27</option>
+                        <option>28</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                    </select>
+                    <select id="sel1" class="form-control" name="Month">
+                        <option>Jan</option>
+                        <option>Feb</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>Aug</option>
+                        <option>Sep</option>
+                        <option>Oct</option>
+                        <option>Nov</option>
+                        <option>Dec</option>
+                    </select>
+                    <select id="sel1" class="form-control" name="Year">
+                        <option>1995</option>
+                        <option>1996</option>
+                        <option>1997</option>
+                        <option>1998</option>
+                        <option>1999</option>
+                        <option>2000</option>
+                        <option>2001</option>
+                        <option>2002</option>
+                        <option>2003</option>
+                        <option>2004</option>
+                        <option>2005</option>
+                        <option>2006</option>
+                        <option>2007</option>
+                        <option>2008</option>
+                        <option>2009</option>
+                        <option>2010</option>
+                        <option>2011</option>
+                        <option>2012</option>
+                        <option>2013</option>
+                        <option>2014</option>
+                        <option>2015</option>
+                    </select>
+                </div>
+            </div>
+            <div class="controls form-group" style="margin-left:0; margin-top:15px">
+                <div class="radio">
+                    <label style="margin-right:15px"><input type="radio"  name="Sex" value="Male" required>Male</label>
+                    <label><input type="radio" name="Sex" value="Female" required>Female</label>
+                </div>
+
+                <input id="SignUp" type="submit" class="btn btn-success" value="Sign Up" style="padding-right:70px;padding-left:70px;margin-top:20px"/>
+                </div>
+        }   
+        </div>
+</body>
+</html>

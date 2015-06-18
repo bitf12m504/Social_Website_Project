@@ -1,0 +1,339 @@
+﻿
+@using Social_Frenzy.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/Bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/FancyBox/jquery.fancybox.css" media="screen" />
+    <title></title>
+    <script type="text/javascript" src="~/Content/jQuery/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="~/Content/Bootstrap/js/bootstrap.min.js"></script>
+ 
+   <script type="text/javascript" src="~/Content/FancyBox/jquery.fancybox.js"></script>
+   
+    
+    <script src="~/Content/jquery.js"></script>
+    <script src="~/Content/jquery-ui.js"></script>
+    <link href="~/Content/jquery-ui.css" rel="stylesheet">
+
+    
+    <script>
+        $(document).ready(function () {
+            $("#Friend").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Home/AutoCompleteFriend",
+                        type: "POST",
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return { url: "/Friend/Friend_Profile?id="+item.id , value: item.name, label:item.name, image:"/Images/profile.jpg" }
+                            }))
+
+
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    window.location.href = ui.item.url;
+                },
+                messages: {
+                    noResults: "", results: ""
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            $("#notificationLink").click(function () {
+                $("#notificationContainer").toggle();
+                $("#notification_count").fadeOut("slow");
+                return false;
+            });
+
+            //Document Click
+            $(document).click(function () {
+                $("#notificationContainer").hide();
+            });
+            //Popup Click
+           
+
+            
+            
+        });
+        
+        $(document).ready(function () {
+            $("#requestLink").click(function () {
+                $("#requestContainer").fadeToggle(300);
+                $("#request_count").fadeOut("slow");
+                return false;
+            });
+
+            //Document Click
+            $(document).click(function () {
+                $("#requestContainer").hide();
+            });
+            //Popup Click
+            //$("#requestContainer").click(function () {
+            //    return false;
+            //});
+
+            $("#Add").click(function () {
+                $("#formAdd").submit();
+            });
+
+            $("#Cancel").click(function () {
+                $("#formCancel").submit();
+            });
+        });
+    </script>
+    <style>
+    #notification_li{position:relative}
+    #notificationContainer {
+    background-color: white;
+    border: 1px solid rgba(100, 100, 100, .4);
+    -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+   
+    position: absolute;
+    top:30px;
+    margin-left: -90px;
+    width: 270px;
+    z-index: 1;
+    display: none;
+    margin-top:30px;
+    }
+    
+    #notificationTitle {
+   
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom:5px;
+    font-size: 13px;
+    background-color: white;
+
+    border-bottom: 1px solid #dddddd;
+    }
+    #notificationsBody {
+    margin-top:5px;
+    min-height:200px;
+    }
+    #notificationFooter {
+    background-color: #e9eaed;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px;
+    font-size: 12px;
+    border-top: 1px solid #dddddd;
+    }
+    #notification_count {
+    padding: 3px 7px 3px 7px;
+    background: #cc0000;
+    color: #ffffff;
+    font-weight: bold;
+    margin-left: 47px;
+    border-radius: 9px;
+    position: absolute;
+   
+    font-size: 11px;
+    }
+
+        #request_li {
+            position: relative;
+        }
+
+        #requestContainer {
+            background-color: white;
+            border: 1px solid rgba(100, 100, 100, .4);
+            -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+            position: absolute;
+            top: 30px;
+            margin-left: -90px;
+            width: 270px;
+            z-index: 1;
+            display: none;
+            margin-top: 30px;
+        }
+
+        #requestTitle {
+            font-weight: bold;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            font-size: 13px;
+            background-color: white;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        #requestsBody {
+            min-height: 200px;
+        }
+        #request_count {
+            padding: 3px 7px 3px 7px;
+            background: #cc0000;
+            color: #ffffff;
+            font-weight: bold;
+            margin-left: 47px;
+            border-radius: 9px;
+            position: absolute;
+            font-size: 11px;
+        }
+    </style>
+
+</head>
+
+
+<body>
+    <nav class="navbar navbar-inverse form-inline " style="background-color:#035aa8; margin:0">
+        <div class="container-fluid">
+            <img src="~/Images/s.png" style="margin-left:65px" height="45px" width="50px" />
+            <input id="Friend" class="form-control row" style="margin-left:10px; padding-right:220px" placeholder="Search people, friends.." />
+
+            <button type="button" class="btn btn-default row">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+
+            <ul class="nav navbar-nav navbar-right  row" style="margin-right:150px">
+                <li><img src="/Images/@Session["profile"]" width="25px" height="25px" style="margin-top: 10px; margin-left: 10px; margin-right:0px" /></li>
+                <li><a href="/Home/Profile" style="color:white; margin-left:0; font-weight:600">@Session["FirstName"]</a></li>
+                <li><a href="/Home/Home" style="color: white; font-weight: 600">Home</a></li>
+
+                <li id="request_li">
+                    @{
+                        int count = (int)Session["requestCount"];
+                        if (count == 0)
+                        {
+                            <span></span>
+                        }
+                        else
+                        {
+                            <span id="request_count">@count</span>
+                        }
+                    }
+                    <a href="#" id="requestLink"><img src="~/Images/friend.ico" width="30px" height="30px" style="margin-left:15px;" /></a>
+                    <div style="padding:0" id="requestContainer">
+                        <div id="requestTitle">Friend Requests</div>
+                        <div style="padding:0" id="requestsBody">
+                            @{
+                                var v = Session["request"] as List<Friend>;
+                                if (v.Count == 0)
+                                {
+                                    <label>No requests yet</label>
+                                }
+                                else
+                                {
+                                    foreach (var a in v)
+                                    {
+                                        <div class="col-md-12">
+                                            <div class="col-md-2" style="padding:0">
+                                                <img src="/Images/@a.User.Photo" height="50px" width="50px" />
+                                            </div>
+                                            <div class="col-md-10">
+                                                <a href="#">@a.User.FirstName<span> @a.User.LastName</span></a>
+                                                <form id="formAdd" style="float:left" action="/Friend/AddFriend?uid=@a.UserId&fid=@a.FriendId" method="post">
+                                                    <input id="Add" type="button" style="font-size:12px" class="btn btn-primary" value="Add Friend" />
+                                                </form>
+                                                <form id="formCancel" style="float:left" action="/Friend/IgnoreFriend?uid=@a.UserId&fid=@a.FriendId" method="post">
+                                                    <input id="Cancel" type="button" style="font-size:12px; margin-left:3px" class="btn btn-default" value="Cancel" />
+                                                </form>
+                                            </div>
+                                        </div>
+
+
+                                    }
+                                }
+
+                            }
+
+                        </div>
+                    </div>
+                </li>
+
+                <li><img src="~/Images/chat.ico" width="30px" height="30px" style="margin-top: 10px; margin-left: 15px;" /></li>
+                <li id="notification_li">
+
+                    @{
+                        int count1 = (int)Session["notificationCount"];
+                        if (count1 == 0)
+                        {
+                            <span></span>
+                        }
+                        else
+                        {
+                            <span id="notification_count">@count1</span>
+                        }
+                    }
+                    <a href="#" id="notificationLink"><img src="~/Images/globe.ico" width="25px" height="25px" style="margin-left: 10px;" /></a>
+                    <div style="padding:0" id="notificationContainer">
+                        <div id="notificationTitle">Notifications</div>
+                        <div style="padding:0" id="notificationsBody">
+                            @{
+                                List<Notification> s = Session["notification"] as List<Notification>;
+                                if (s.Count == 0)
+                                {
+                                    <label>No notifications yet.</label>
+                                }
+                                else
+                                {
+                                    if (s.Count < 5)
+                                    {
+                                        foreach (var a in s)
+                                        {
+                                            <div class="col-md-12" style="padding:0; margin-top:5px">
+                                                <div class="col-md-1" style="margin-right:5px">
+                                                    <img src="/Images/@a.User1.Photo" height="30px" width="30px" class="img-circle" />
+                                                </div>
+
+                                                <div class="col-md-10">
+                                                    <a id="anchor" href="/Home/ShowPost?uid=@a.UserId&pid=@a.PostId" style="color:black">@a.Note</a>
+                                                </div>
+
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        for (int i = 0; i < 5; i++)
+                                        {
+
+
+                                            <div>
+                                                <div class="col-md-1" style="margin-right:5px">
+                                                    <img src="/Images/@s[i].User1.Photo" height="30px" width="30px" class="img-circle" />
+                                                </div>
+
+                                                <div class="col-md-10">
+                                                    <a id="anchor" href="/Home/ShowPost?uid=@s[i].UserId&pid=@s[i].PostId" style="color:black">@s[i].Note</a>
+                                                </div>
+
+                                            </div>
+                                        }
+                                    }
+
+                                }
+
+                            }
+                        </div>
+                        <div id="notificationFooter"><a href="/Home/Notifications" target="_blank">Click here to See All Notifications</a></div>
+                    </div>
+                </li>
+                <li>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" style="margin-top:10px" type="button" data-toggle="dropdown"><span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Home/Logout">Logout</a></li>
+                    </ul>
+                </div>
+        </li>
+        </ul>
+        </div>
+    </nav>
+
+    <div   style="margin-top:0;">
+        
+        @RenderBody()
+    </div>
+    
+    
+</body>
+</html>

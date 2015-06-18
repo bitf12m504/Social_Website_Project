@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "~/Views/Shared/_Admin_Layout.cshtml";
+}
+@model List<Social_Frenzy.Models.Post>
+<div class="col-md-9" style="margin-top:10px">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span style="font-size:20px; font-family:'Comic Sans MS'">View/Delete Posts</span>
+        </div>
+        <div class="panel-body">
+           
+                @foreach (Social_Frenzy.Models.Post p in Model)
+                {
+                 <div class="panel panel-default col-md-8" style="margin-top: 20px">
+
+                    <div class="panel-body" style="color:grey; ">
+                        <div style="height:10px; background-color:lavender; padding:0 ">
+                            <input type="hidden" />
+                        </div>
+                        <div>
+
+                            <img src="/Images/@p.User.Photo" style="margin-top:10px" height="40px" width="40px" />
+                            <a style="font-weight:600" href="#">@p.User.FirstName<span> @p.User.LastName</span></a>
+                            <form action="/Admin/DeletePost/@p.Id" method="post"><button type="submit" style="margin-top:10px" class="btn btn-default pull-right">Delete</button><br /><br /></form>
+                            
+                        </div>
+
+                        <p style="color:black">
+                            @p.Description
+                        </p>
+                        @if (p.Photo != null)
+                        {
+                            <img src="/Images/@p.Photo" width="450px" height="400px" />
+                        }
+
+                        
+                    </div>
+                   
+                </div>
+
+
+                }
+        </div>
+    </div>
+    
+</div>

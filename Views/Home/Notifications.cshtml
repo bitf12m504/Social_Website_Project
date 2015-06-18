@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Social_Frenzy.Models
+<body style="height: 100%; background-color: lavender;">
+
+    
+    @{
+    MyDatabaseEntities entity = new MyDatabaseEntities();
+
+    int sessionID = (int)Session["id"];
+    var query = entity.Notifications.Where(x => ((x.UserId == sessionID && x.Liker == null) || (x.Liker == sessionID && x.FriendId != sessionID))).GroupBy(x => x.CurrentDate).Select(n => new { comment = n });
+    int flag = 0;
+
+    foreach (var v in query)
+    {
+        <div>
+            <label style="font-size:18px; margin-left:5px">@v.comment.Key</label>
+          @{
+              List<Notification> list = v.comment.OrderByDescending(x=>x.Time).ToList();
+            foreach(var a in list)
+            {
+                flag = 1;
+            <div style="margin-left:10px;" class="col-md-12">
+
+              
+
+                    <div class="col-md-5" style="background-color:white">
+                        <div class="col-md-1" style="margin-right:5px; margin-bottom:5px">
+                            <img src="/Images/@a.User1.Photo" height="30px" width="30px" class="img-circle" />
+                        </div>
+
+                        <div class="col-md-10">
+                            <a href="/Home/ShowPost?uid=@a.UserId&pid=@a.PostId" style="color:black; font-size:15px">@a.Note</a><hr/>
+                        </div>
+
+                    </div>
+                    
+               
+            </div>
+            }
+    }
+        </div>
+    }
+} 
+
+       @if(flag == 0)
+       {
+           <h3>No notifications yet.</h3> 
+       }
+        
+</body>

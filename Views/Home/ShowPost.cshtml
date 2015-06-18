@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Social_Frenzy.Models.Post
+<body style="height: 100%; background-color: lavender;">
+    <div class="panel panel-default col-md-6" style="margin-bottom:20px">
+
+        <div class="panel-body" style="color:grey; ">
+            <div style="height:10px; background-color:lavender; padding:0 ">
+                <input type="hidden" />
+            </div>
+            <div>
+
+                <img src="/Images/@Model.User.Photo" style="margin-top:10px" height="40px" width="40px" />
+                <a style="font-weight:600" href="#">@Model.User.FirstName<span> @Model.User.LastName</span></a>
+                
+            </div>
+
+            <p style="color:black">
+                @Model.Description
+            </p>
+            @if (Model.Photo != null)
+            {
+                <img src="/Images/@Model.Photo" width="450px" height="400px" />
+            }
+
+            <div style="margin-top:5px">
+               
+                @if (Model.Status == 0)
+                {
+                    <a href="/Like/AddLike?cid=0&pid=@Model.Id&uid=@Model.User.Id&name=Post&view=Show">Like</a>
+                }
+                else
+                {
+                    <a href="/Like/AddLike?cid=0&pid=@Model.Id&uid=@Model.User.Id&name=Post&view=Show">Unlike</a>
+                }
+                <span style="color:lightblue">- </span>
+
+                <a href="#">Comment</a>
+
+            </div>
+        </div>
+        <div class="panel-footer col-md-12">
+            
+
+            <div class="col-md-12" style="padding:0">
+                <div class="col-md-1">
+
+                    <img src="/Images/@Model.User.Photo" style="margin-bottom:12px" height="40px" width="40px" />
+                </div>
+                <form action="/Comment/AddComment" method="post">
+                    <input type="hidden" name="PostId" value="@Model.Id" />
+                    <input type="hidden" name="UserId" value="@Model.User.Id" />
+                    <input type="hidden" name="View" value="Show" />
+                    <div class="col-md-10" style="padding-right:0px">
+                        <input class="form-control" type="text" name="Description" placeholder="Write a comment..." />
+                    </div>
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-send"></span>
+                    </button>
+                </form>
+                <br />
+            </div>
+
+
+
+            @foreach (var c in Model.Comments1.OrderByDescending(a => a.CurrentDate))
+            {
+
+                <div class="col-md-12" style="padding:0">
+                    <div class="col-md-1">
+                        <img style="margin-top:0px" src="/Images/@c.User1.Photo" height="40px" width="40px" />
+                    </div>
+                    <div class="col-md-11">
+
+                        <a style="margin-bottom: 10px; font-weight: 700; color: #217AA2" href="#">@c.User1.FirstName<span> @c.User1.LastName</span></a>
+                        <div>@c.Description</div>
+
+                        @if (c.Status == 0)
+                        {
+                            <div style="padding: 0;"><a href="/Like/AddLike?cid=@c.Id&pid=@c.Post.Id&uid=@c.User.Id&name=Comment&view=Show" style="color: #217AA2;">Like </a><span style="color: #217AA2">- </span><span style="color: #217AA2; margin-top: 3px" class="glyphicon glyphicon-thumbs-up"></span><span style="font-size: 15px; font-family: Calibri; color: #217AA2"> @c.Likes</span> </div><hr />
+                        }
+                        else
+                        {
+                            <div style="padding: 0;"><a href="/Like/AddLike?cid=@c.Id&pid=@c.Post.Id&uid=@c.User.Id&name=Comment&view=Show" style="color: #217AA2;">Unlike </a><span style="color: #217AA2">- </span><span style="color: #217AA2; margin-top: 3px" class="glyphicon glyphicon-thumbs-up"></span><span style="font-size: 15px; font-family: Calibri; color: #217AA2"> @c.Likes</span> </div><hr />
+                        }
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+</body>

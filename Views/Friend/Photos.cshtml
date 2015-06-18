@@ -1,0 +1,93 @@
+﻿@model List<Social_Frenzy.Models.Post>
+@using Social_Frenzy.Models
+<body style="background-color:lavender">
+
+ 
+        <div class="panel panel-default col-md-9" style="margin-left:20px; padding:0">
+            @{
+                User u = TempData["UserData"] as User;              
+            }
+            <div class="panel-body col-md-12" style="background-color: lavenderblush; background-image: url(/Images/@u.Profile );border-bottom: 2px solid white; background-size: 970px 500px; height:700">
+                <div>
+                    <img src="/Images/@u.Photo" height="150px" width="150px" style="border:1px solid white; margin-top: 110px" />
+                </div>
+                <div>
+                    <label style="color:white;font-weight:600; font-size:18px; margin-left:5px">@u.FirstName <span>@u.LastName</span></label>
+                </div>
+
+            </div>
+            <div class="panel-footer col-md-12">
+                <ul class="nav nav-tabs" style="padding-top:0">
+                    <li><a href="/Friend/Friend_Profile/@u.Id">Timeline</a></li>
+
+                    <li><a href="/Friend/Friends/@u.Id">Friends</a></li>
+
+                    <li><a href="/Friend/Photos/@u.Id">Photos</a></li>
+
+
+                </ul>
+            </div>
+        </div>
+
+   
+    <div style="margin-left:20px; padding:0" class="col-md-9">
+        <div class="panel panel-default" style="padding:0">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-picture" style="font-size:18px"> <span style="font-size:20px; font-family:Arial"> Photos</span></span>
+                <div style="margin-left:20px; margin-top:10px">Photos of You</div>
+            </div>
+            <div class="panel-body">
+                @{
+                    int i = 0;
+                    if (Model.Count == 0)
+                    {
+                        <p>No photos yet</p>
+                    }
+                    else
+                    {
+                        while (i < Model.Count())
+                        {
+                            <table>
+                                <tr>
+                                    @if (i < Model.Count())
+                                    {
+
+                                        Social_Frenzy.Models.Post p = Model[i];
+                                        i++;
+
+                                        <td><a id="fancybox" rel="group" href="/Images/@p.Photo"><img src="/Images/@p.Photo" alt="" height="235px" width="235px" style="border:2px solid white"></a></td>
+                                    }
+                                    @if (i < Model.Count())
+                                    {
+
+                                        Social_Frenzy.Models.Post p = Model[i];
+                                        i++;
+
+                                        <td><a href="#ImageModal"><img src="/Images/@p.Photo" id="photo" height="235px" width="235px" style="border:2px solid white" /></a></td>
+                                    }
+                                    @if (i < Model.Count())
+                                    {
+
+                                        Social_Frenzy.Models.Post p = Model[i];
+                                        i++;
+
+                                        <td><a href="#ImageModal"><img src="/Images/@p.Photo" id="photo" height="235px" width="235px" style="border:2px solid white" /></a></td>
+                                    }
+                                    @if (i < Model.Count())
+                                    {
+
+                                        Social_Frenzy.Models.Post p = Model[i];
+                                        i++;
+
+                                        <td><a href="#ImageModal"><img src="/Images/@p.Photo" id="photo" height="235px" width="235px" style="border:2px solid white" /></a></td>
+                                    }
+                                </tr>
+                            </table>
+                        }
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+    </body>

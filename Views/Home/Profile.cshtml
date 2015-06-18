@@ -1,0 +1,707 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Social_Frenzy.Models
+@model Social_Frenzy.Models.User
+
+<body style="background-color: lavender; " >
+
+    <script type="text/javascript">
+        $(function () {
+            $('#link').click(function () {
+                $('#image').show();
+                return false;
+            });
+        });
+    </script>
+    @Html.Partial("~/Views/Shared/Timeline.cshtml")
+    <div style="margin-left:20px" class="col-md-4 ">
+        <div class="panel panel-default col-md-12">
+            <div style="margin-top:8px">
+                <div class="col-md-1">
+                    <div>
+                        <span class="glyphicon glyphicon-briefcase" style="color:grey"></span>
+                    </div>
+                </div>
+                <div class="col-md-11">
+                    <p style="font-size: 12px">Works at 
+                       @if (Model.Work == "none")
+                        {
+                            <span style="color:navy; font-family:Arial; ">none</span>
+                        }
+                        else
+                       {
+                           <span style="color:navy; font-family:Arial; ">@Model.Work</span>
+                       }
+                        </p>
+                </div>
+            </div>
+            <div style="margin-top:3px">
+                <div class="col-md-1">
+                    <div>
+                        <span class="glyphicon glyphicon-book" style="color:grey"></span>
+                    </div>
+                </div>
+                <div class="col-md-11">
+                    <p style="font-size: 12px">Studies at 
+                        @if (Model.Study == "none")
+                        {
+                            <span style="color:navy; font-family:Arial; ">none</span>
+                        }
+                        else
+                        {
+                            <span style="color:navy; font-family:Arial; ">@Model.Study</span>
+                        }
+                    </p>
+                </div>
+            </div>
+            <div style="margin-top:3px">
+                <div class="col-md-1">
+                    <div>
+                        <span class="glyphicon glyphicon-home" style="color:grey"></span>
+                    </div>
+                </div>
+                <div class="col-md-11">
+                    <p style="font-size: 12px">Lives in 
+                        @if (Model.City == "none")
+                        {
+                            <span style="color:navy; font-family:Arial; ">none</span>
+                        }
+                        else
+                        {
+                            <span style="color:navy; font-family:Arial; ">@Model.City</span>
+                        }
+                    </p>
+                </div>
+            </div>
+            <div style="margin-top:3px">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                    <p style="font-size: 12px;font-family:Arial; color:grey">Born on <span>@Model.Month</span><span> @Model.Day</span><span> ,@Model.Year</span></p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:50px">
+            <div class="panel panel-default col-md-12" >
+                 <div class="panel-body">
+                     @if(Model.Friends == 0)
+                     {
+                         <p>No friends yet.</p>
+                     }
+                     else
+                     {
+                         <a href="/Home/Friends">Friends(<span>@Model.Friends</span>)</a><hr/>
+                         int i = 0;
+                         int sessionID = (int)Session["id"];
+                         MyDatabaseEntities entity = new MyDatabaseEntities();
+                         List<Friend> list = entity.Friends.Where(x =>( x.UserId == sessionID || x.FriendId == sessionID) && x.Status == 2).ToList();
+                         if(list.Count < 9)
+                         {
+                            while(i < list.Count)
+                         {
+                            <table>
+                         <tr>
+                             @if(i < list.Count)
+                             {
+                                 Friend f = list[i];
+                                 i++;
+                                 
+                                 if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                             }
+                             
+                             @if (i < list.Count)
+                            {
+                                Friend f = list[i];
+                                i++;
+                                if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                             }
+                             
+                             @if (i < list.Count)
+                             {
+                                 Friend f = list[i];
+                                 i++;
+                                 if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                             }
+                         </tr>
+                                <tr>
+                                    @if (i < list.Count)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+
+                                    @if (i < list.Count)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+
+                                    @if (i < list.Count)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+                                </tr>
+                                <tr>
+                                    @if (i < list.Count)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+
+                                    @if (i < list.Count)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+
+                                    @if (i < list.Count)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+                                </tr>
+                     </table>        
+                         }    
+                         }
+                         else
+                         {
+                              while(i < 9)
+                         {
+                            <table>
+                         <tr>
+                             @if(i < 9)
+                             {
+                                 Friend f = list[i];
+                                 i++;
+                                if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                             }
+                             
+                             @if (i < 9)
+                            {
+                                Friend f = list[i];
+                                i++;
+                                if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                             }
+                             
+                             @if (i < 9)
+                             {
+                                 Friend f = list[i];
+                                 i++;
+                                 if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                             }
+                         </tr>
+                                <tr>
+                                    @if (i < 9)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                       if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+
+                                    @if (i < 9)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+
+                                    @if (i < 9)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+                                </tr>
+                                <tr>
+                                    @if (i < 9)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+
+                                    @if (i < 9)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+
+                                    @if (i < 9)
+                                    {
+                                        Friend f = list[i];
+                                        i++;
+                                        if(f.User1.Id == Model.Id)
+                                    {
+                                         <td><img src="~/Images/@f.User.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    else
+                                    {
+                                         <td><img src="~/Images/@f.User1.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                                    }
+                                    }
+                                </tr>
+                     </table>        
+                         }    
+                         }
+                         
+                     
+                     }
+                     
+                 </div>
+             </div>
+
+       </div>
+        <div style="margin-top:50px">
+            <div class="panel panel-default col-md-12">
+                <div class="panel-body">
+                    <a href="/Home/Photos">Photos</a><hr />
+                    @{
+                        int a =  0;
+                        MyDatabaseEntities entity1 = new MyDatabaseEntities();
+                        int session = (int)Session["id"];
+                        List<Post> list1 = entity1.Posts.Where(x => x.Photo != null && x.UserId == session).ToList();
+                        if(list1.Count < 9)
+                         {
+                            while(a < list1.Count)
+                         {
+                            <table>
+                         <tr>
+                             @if(a < list1.Count)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                             
+                             @if(a < list1.Count)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                             
+                             @if(a < list1.Count)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                         </tr>
+                                <tr>
+                                    @if(a < list1.Count)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+
+                                    @if(a < list1.Count)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+
+                                    @if(a < list1.Count)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                                </tr>
+                                <tr>
+                                    @if(a < list1.Count)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+
+                                    @if(a < list1.Count)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+
+                                    @if(a < list1.Count)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                                </tr>
+                     </table>        
+                         }    
+                         }
+                         else
+                         {
+                              while(a < 9)
+                         {
+                            <table>
+                         <tr>
+                             @if(a < 9)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                             
+                              @if(a < 9)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                             
+                             @if(a < 9)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                         </tr>
+                                <tr>
+                                     @if(a < 9)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+
+                                     @if(a < 9)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+
+                                     @if(a < 9)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                                </tr>
+                                <tr>
+                                     @if(a < 9)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+
+                                     @if(a < 9)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+
+                                     @if(a < 9)
+                             {
+                                 Post p = list1[a];
+                                 a++;
+                                 <td><img src="~/Images/@p.Photo" height="120px" width="122px" style="border:2px solid white" /></td>
+                             }
+                                </tr>
+                     </table>        
+                         }    
+                         }
+                         
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <img src="~/Images/write.ico" height="15px" width="15px" />
+                    <a href="#" style="color:black;">Update Status</a>
+                </div>
+                <div class="panel-body">
+                    <form action="/Post/AddPost" method="post">
+                        <div class="form-group" style="padding:0">
+                            <input type="hidden" name="PostType" value="Profile">
+                            <textarea placeholder="Write something here..." class="form-control" rows="6" name="Description"></textarea><hr />
+                        </div>
+
+                        <div class="col-md-8">
+                            <span class="glyphicon glyphicon-camera"></span><a id="link" href="#" style="color:black"> Add photo</a>
+                        </div>
+                        <div class=" col-md-3">
+                            <select class="form-control " name="Privacy">
+                                <option>Friends</option>
+                                <option>Only me</option>
+                            </select>
+
+                        </div>
+                        <div class="col-md-1" style="padding:0">
+                            <button class="btn btn-primary">Post</button>
+                        </div>
+
+                    </form>
+                    @if (ViewBag.flag == 0)
+                    {
+                        <div id="image" hidden>
+                            <img src="@ViewBag.profile" height=" 100px" width="100px" />
+                            <form action="/Home/SaveWallPhoto" method="post" enctype="multipart/form-data">
+                                <div class="form-horizontal" style="padding:0; margin-top:5px">
+                                    <input type="file" value="Choose File" name="file" />
+                                    <input type="submit" value="Upload" style="margin-top:5px" name="Command" />
+                                </div>
+                            </form>
+                            <form style="margin-top:5px" action="/Home/Profile" method="post">
+                                <input type="submit" value="Cancel" />
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="image">
+                            <img src="@ViewBag.profile" height=" 100px" width="100px" />
+                            <form action="/Home/SaveWallPhoto" method="post" enctype="multipart/form-data">
+                                <div class="form-horizontal" style="padding:0; margin-top:5px">
+                                    <input type="file" value="Choose File" name="file" />
+                                    <input type="submit" value="Upload" style="margin-top:5px" name="Command" />
+                                </div>
+                            </form>
+                            <form action="/Home/Profile" method="post" style="margin-top:5px">
+                                <input type="submit" value="Cancel" />
+                            </form>
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            @{
+                List<Post> list2 = Session["posts"] as List<Post>;    
+            
+            foreach (Post p in list2)
+            {
+                <div class="panel panel-default" style="margin-bottom:20px">
+
+                    <div class="panel-body" style="color:grey; ">
+                        <div style="height:10px; background-color:lavender; padding:0 ">
+                            <input type="hidden" />
+                        </div>
+                        <div>
+
+                            <img src="/Images/@p.User.Photo" style="margin-top:10px" height="40px" width="40px" />
+                            <a style="font-weight:600" href="#">@p.User.FirstName<span> @p.User.LastName</span></a>
+                            <form action="/Home/DeletePost?id=@p.Id&view=Profile" method="post"><button type="submit" style="margin-top:10px" class="btn btn-default pull-right">Delete</button><br /><br /></form>
+                        </div>
+
+                        <p style="color:black">
+                            @p.Description
+                        </p>
+                        @if (p.Photo != null)
+                        {
+                            <img src="/Images/@p.Photo" width="450px" height="400px" />
+                        }
+
+                        <div style="margin-top:5px">
+
+                            @if (p.Status == 0)
+                            {
+                                <a href="/Like/AddLike?cid=0&pid=@p.Id&uid=@p.User.Id&name=Post&view=Profile">Like</a>
+                            }
+                            else
+                            {
+                                <a href="/Like/AddLike?cid=0&pid=@p.Id&uid=@p.User.Id&name=Post&view=Profile">Unlike</a>
+                            }
+                            <span style="color:lightblue">- </span>
+
+                            <a href="#">Comment</a>
+
+                        </div>
+                    </div>
+                    <div class="panel-footer col-md-12">
+                        
+
+                        <div class="col-md-12" style="padding:0">
+                            <div class="col-md-1">
+
+                                <img src="/Images/@Session["profile"]" style="margin-bottom:12px" height="40px" width="40px" />
+                            </div>
+                            <form action="/Comment/AddComment" method="post">
+                                <input type="hidden" name="PostId" value="@p.Id" />
+                                <input type="hidden" name="UserId" value="@p.UserId" />
+                                <input type="hidden" name="View" value="Profile">
+                                <div class="col-md-10" style="padding-right:0px">
+                                    <input class="form-control" type="text" name="Description" placeholder="Write a comment..." />
+                                </div>
+                                <button type="submit" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-send"></span>
+                                </button>
+                            </form>
+                            <br />
+                        </div>
+
+
+
+                        @foreach (var c in p.Comments1.OrderByDescending(i => i.CurrentDate))
+                        {
+
+                            <div class="col-md-12" style="padding:0">
+                                <div class="col-md-1">
+                                    <img style="margin-top:0px" src="/Images/@c.User1.Photo" height="40px" width="40px" />
+                                </div>
+                                <div class="col-md-11">
+
+                                    <a style="margin-bottom: 10px; font-weight: 700; color: #217AA2" href="#">@c.User1.FirstName<span> @c.User1.LastName</span></a>
+                                    <div>@c.Description</div>
+
+                                    @if (c.Status == 0)
+                                    {
+                                        <div style="padding: 0;"><a href="/Like/AddLike?cid=@c.Id&pid=@c.Post.Id&uid=@c.User.Id&name=Comment&view=Profile" style="color: #217AA2;">Like </a><span style="color: #217AA2">- </span><span style="color: #217AA2; margin-top: 3px" class="glyphicon glyphicon-thumbs-up"></span><span style="font-size: 15px; font-family: Calibri; color: #217AA2"> @c.Likes</span> </div><hr />
+                                    }
+                                    else
+                                    {
+                                        <div style="padding: 0;"><a href="/Like/AddLike?cid=@c.Id&pid=@c.Post.Id&uid=@c.User.Id&name=Comment&view=Profile" style="color: #217AA2;">Unlike </a><span style="color: #217AA2">- </span><span style="color: #217AA2; margin-top: 3px" class="glyphicon glyphicon-thumbs-up"></span><span style="font-size: 15px; font-family: Calibri; color: #217AA2"> @c.Likes</span> </div><hr />
+                                    }
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+
+            }
+            }
+        </div>
+    
+</body>

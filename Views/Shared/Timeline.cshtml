@@ -1,0 +1,100 @@
+﻿<script>  
+    $(function () {
+        $('#button_profile').click(function () {
+            $('#upload_photo').toggle();
+            return false;
+        });
+    });
+</script>
+<div style="margin-left:20px" class="col-md-9">
+    <div class="panel panel-default col-md-12"  >
+
+        <div class="panel-body col-md-12" style="background-color: white; background-image:url(/Images/Timeline.png); background-size: 970px 350px; height:400">
+            
+            
+            <!--
+            <div style="margin-top:10px">
+                <button type="submit" class="btn btn-primary" style="font-size: 12px; border: 3px grey">Choose File</button>
+                <button type="submit" class="btn btn-success" style="font-size: 12px; border: 3px grey">Upload</button>
+
+
+
+            </div>-->
+            <img src="/Images/@Session["profile"]" height="150px" width="150px" style="border:1px solid white; margin-top: 80px" />
+            <div style="margin-top:5px">
+                <button type="submit" id="button_profile" style="width:160px" class="btn btn-primary">Upload photo</button>
+            </div>
+            
+            <div id="upload_photo" hidden>
+                @using (Html.BeginForm("SaveProfile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    
+                    <div class="form-horizontal" style="padding:0; margin-top:5px">
+        
+            <input type="file"style="font-size: 12px; width:160px " value="Choose File" name="file" />
+       
+       
+            <input type="submit"  style="font-size: 12px; width: 160px; margin-top:5px" value="Upload" name="Command" />
+       
+    
+    </div>
+                }
+            </div>
+
+        </div>
+        <div class="panel-footer">
+            <ul class="nav nav-tabs">
+                <!--<li ><a data-toggle="tab" href="#home">Timeline</a></li>-->
+                <li>@Html.ActionLink("Timeline", "Profile")</li>
+                <!--<li><a data-toggle="tab" href="#menu1">About</a></li>-->
+                <li>@Html.ActionLink("Friends", "Friends")</li>
+                <!--<li><a data-toggle="tab" href="#menu3">Photos</a></li>-->
+                @{
+                    int sessionID = (int)Session["id"];
+                }
+                <li>@Html.ActionLink("Photos", "Photos", new { id = sessionID })</li>
+                <li><a data-toggle="modal" href="#myModal">Edit Profile</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update your profile..</h4>
+            </div>
+            <form class="form-horizontal " role="form" action="/Home/SubmitForm" method="post">
+                <div class="modal-body">
+                    <div class="col-sm-12">
+                        <div class="controls form-group" style="margin:0px">
+
+                            <input class="col-sm-12 well well-sm" type="text" name="FirstName" placeholder="First Name">
+                        
+                            <input class="col-sm-12 well well-sm" type="text" name="LastName" placeholder="Last name">
+                       
+                            <input class="col-sm-12 well well-sm" type="password" name="Password" placeholder="Password">
+
+                            <input class="col-sm-12 well well-sm" type="text" name="Work" placeholder="Works At">
+
+                            <input class="col-sm-12 well well-sm" type="text" name="Study" placeholder="Studies At">
+
+                            <input class="col-sm-12 well well-sm" type="text" name="City" placeholder="Lives in">
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Update</button>
+                   
+                    
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
